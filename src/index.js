@@ -15,7 +15,7 @@ const path = process.cwd();
 const fs = require("fs");
 
 program
-    .version("1.0.0")
+    .version("1.1.3")
     .description("A CLI to make customizable 'tsconfig.json' files easily");
 
 function main() {

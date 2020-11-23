@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 
 const config = {
     "compilerOptions": {
@@ -122,9 +123,11 @@ module.exports = function createNodeFile(custom) {
             } else {
                 fs.writeFileSync(`/${path.join(process.cwd(),answers.location,hasJson? answers.name.split(" ").join("-"): `${answers.name.replace(" ", "-")}.json`)}`, JSON.stringify(config), "utf-8");
             }
+            console.log(chalk.cyan(`Generated the ${answers.name.split(" ").join("-")}.json file`))
         })
     } else {
         const data = `{\n\t"compilerOptions": {\n\t\t"target": "es5",\n\t\t"module": "commonjs",\n\t\t"jsx": "react-native",\n\t\t"lib": ["es6", "esnext.asynciterable"],\n\t\t"strict": true,\n\t\t"esModuleInterop": true,\n\t\t"rootDir": "src",\n\t\t"forceConsistentCasingInFileNames": true,\n\t\t"noImplicitReturns": true,\n\t\t"noImplicitThis": true,\n\t\t"noImplicitAny": true,\n\t\t"strictNullChecks": true,\n\t\t"suppressImplicitAnyIndexErrors": true,\n\t\t"noUnusedLocals": true,\n\t\t"skipLibCheck": true,\n\t\t"baseUrl": "."\n\t}\n}\n`;
         fs.writeFileSync('tsconfig.json', data, 'utf-8');
+        console.log(chalk.cyan(`Generated the tsconfig.json file`))
     }
 }
