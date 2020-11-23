@@ -1,0 +1,6 @@
+{
+    "[javascript]": {
+        "diffEditor.renderSideBySide": false,
+        "editor.minimap.enabled": false
+    }
+}
