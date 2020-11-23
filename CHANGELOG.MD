@@ -1,4 +1,10 @@
-# 1.1.3 (Current)
+# 1.1.6 (Current)
+Added support for VueJS and replaced `bin` scripts
+
+# 1.1.5
+Added Support for `AngularJS`
+
+# 1.1.3 
 
 Chalk was added as an dependency and shows a message for generation of the file.
 
