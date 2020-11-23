@@ -1,30 +1,29 @@
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
-const chalk = require('chalk');
 
 const config = {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "jsx": "react-native",
-        "lib": ["es6", "esnext.asynciterable"],
-        "strict": true,
-        "esModuleInterop": true,
+        "outDir": "./built/",
+        "sourceMap": true,
         "rootDir": "src",
-        "forceConsistentCasingInFileNames": true,
+        "strict": true,
         "noImplicitReturns": true,
-        "noImplicitThis": true,
         "noImplicitAny": true,
-        "strictNullChecks": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true,
-        "skipLibCheck": true,
-        "baseUrl": "."
-    }
+        "module": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "target": "ES5",
+        "lib": ["ES2015", "DOM"]
+    },
+    "include": [
+        "./client/**/*"
+    ]
 }
 
-module.exports = function createNativeFile(custom) {
+module.exports = function createVueFile(custom) {
         if (custom) {
             inquirer.prompt([{
                         type: "text",
@@ -36,6 +35,12 @@ module.exports = function createNativeFile(custom) {
                         message: "Main directory : ",
                         name: "src",
                         default: "src"
+                    },
+                    {
+                        type: "text",
+                        message: "Output directory : ",
+                        name: "outDir",
+                        default: "build/dist",
                     },
                     {
                         type: 'list',
@@ -87,8 +92,8 @@ module.exports = function createNativeFile(custom) {
                         default: true
                     }, {
                         type: 'confirm',
-                        message: "SkipLibCheck ?",
-                        name: 'libcheck',
+                        message: "sourceMap ?",
+                        name: 'sourceMap',
                         default: true
                     }, {
                         type: 'text',
@@ -97,11 +102,12 @@ module.exports = function createNativeFile(custom) {
                         default: 'tsconfig.json'
                     }
                 ]).then((answers) => {
-                        config.compilerOptions.rootDir = answers.src;
                         config.compilerOptions.lib = answers.lib;
                         config.compilerOptions.target = answers.target;
                         config.compilerOptions.strict = answers.strict;
-                        config.compilerOptions.skipLibCheck = answers.libcheck;
+                        config.compilerOptions.sourceMap = answers.sourceMap;
+                        config.compilerOptions.rootDir = answers.src;
+                        config.compilerOptions.outDir = answers.outDir;
 
                         const hasJson = answers.name.includes('.json')
                         if (answers.location == path.basename(process.cwd())) {
@@ -109,11 +115,11 @@ module.exports = function createNativeFile(custom) {
             } else {
                 fs.writeFileSync(`/${path.join(process.cwd(),answers.location,hasJson? answers.name.split(" ").join("-"): `${answers.name.replace(" ", "-")}.json`)}`, JSON.stringify(config), "utf-8");
             }
-            console.log(chalk.cyan(`Generated the ${answers.name.split(" ").join("-")}.json file for React Native`))
+            console.log(chalk.cyan(`Generated the tsconfig.json file for VueJS`))
         })
     } else {
-        const data = `{\n\t"compilerOptions": {\n\t\t"target": "es5",\n\t\t"module": "commonjs",\n\t\t"jsx": "react-native",\n\t\t"lib": ["es6", "esnext.asynciterable"],\n\t\t"strict": true,\n\t\t"esModuleInterop": true,\n\t\t"rootDir": "src",\n\t\t"forceConsistentCasingInFileNames": true,\n\t\t"noImplicitReturns": true,\n\t\t"noImplicitThis": true,\n\t\t"noImplicitAny": true,\n\t\t"strictNullChecks": true,\n\t\t"suppressImplicitAnyIndexErrors": true,\n\t\t"noUnusedLocals": true,\n\t\t"skipLibCheck": true,\n\t\t"baseUrl": "."\n}\n`
-        fs.writeFileSync("tsconfig.json", data, "utf-8");
-        console.log(chalk.cyan(`Generated the tsconfig.json file for React Native`))
+        const data = `{\n\t"compilerOptions": {\n\t\t"outDir": "./built/",\n\t\t"sourceMap": true,\n\t\t"rootDir": "src",\n\t\t"strict": true,\n\t\t"noImplicitReturns": true,\n\t\t"noImplicitAny": true,\n\t\t"module": "es2015",\n\t\t"experimentalDecorators": true,\n\t\t"emitDecoratorMetadata": true,\n\t\t"moduleResolution": "node",\n\t\t"target": "ES5",\n\t\t"lib": ["ES2015", "DOM"]\n\t},\n\t"include": [\n\t\t"./client/**/*"]\n}\n`
+        fs.writeFileSync('tsconfig.json', data, 'utf-8');
+        console.log(chalk.cyan(`Generated the tsconfig.json file for VueJS`))
     }
 }

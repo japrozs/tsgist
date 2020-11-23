@@ -1,14 +1,31 @@
 # Tsgist
 
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="20">
+<linearGradient id="a" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+</linearGradient>
+<rect rx="3" width="100" height="20" fill="#555"/>
+<rect rx="3" x="45" width="55" height="20" fill="#4c1"/>
+<path fill="#4c1" d="M45 0h4v20h-4z"/>
+<rect rx="3" width="100" height="20" fill="url(#a)"/>
+<g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+    <text x="24" y="15" fill="#010101" fill-opacity=".3">build</text>
+    <text x="24" y="14">build</text>
+    <text x="72" y="15" fill="#010101" fill-opacity=".3">passing</text>
+    <text x="72" y="14">passing</text>
+</g>
+</svg><br>
 Tsgist is a package to generate `tsconfig.json` file is an easy and customizable manner.To get started install `tsgist` through `npm` with the following command:
 
-```
+```bash
 npm install -g tsgist
 ```
 
 Or for a quick start, please use the command below:
 
-```
+```bash
 npx tsgist init
 ```
 

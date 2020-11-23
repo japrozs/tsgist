@@ -2,7 +2,9 @@ const inquirer = require("inquirer");
 const chalk = require('chalk')
 const path = require("path");
 const process = require("process");
-const { combineFlagAndOptionalValue } = require("commander");
+const {
+    combineFlagAndOptionalValue
+} = require("commander");
 const fs = require("fs");
 
 //TODO : Remove the comments in the config given below
@@ -139,15 +141,15 @@ module.exports = function createReactFile(custom) {
                 ? answers.name.split(" ").join("-")
                 : `${answers.name.replace(" ", "-")}.json`
             )}`,
-            JSON.stringify(config),
-            "utf-8"
-          );
-        }
-        console.log(chalk.cyan(`Generated the ${answers.name.split(" ").join("-")}.json file`))
-      });
-  } else {
-    const config = `{\n\t"compilerOptions": {\n\t\t"baseUrl": ".",\n\t\t"outDir": "build/dist",\n\t\t"module": "esnext",\n\t\t"target": "es5",\n\t\t"lib": ["es6", "dom", "esnext.asynciterable"],\n\t\t"sourceMap": true,\n\t\t"allowJs": true,\n\t\t"jsx": "react",\n\t\t"moduleResolution": "node",\n\t\t"rootDir": "src",\n\t\t"forceConsistentCasingInFileNames": true,\n\t\t"noImplicitReturns": true,\n\t\t"noImplicitThis": true,\n\t\t"noImplicitAny": true,\n\t\t"strictNullChecks": true,\n\t\t"suppressImplicitAnyIndexErrors": true,\n\t\t"noUnusedLocals": true,\n\t\t"skipLibCheck": true\n\t},\n\t"exclude": [\n\t\t"node_modules",\n\t\t"build",\n\t\t"scripts",\n\t\t"acceptance-tests",\n\t\t"webpack",\n\t\t"jest",\n\t\t"src/setupTests.ts"\n\t]\n}\n`;
-    fs.writeFileSync("tsconfig.json", config, "utf-8");
-    console.log(chalk.cyan(`Generated the tsconfig.json file`))
-  }
+                        JSON.stringify(config),
+                        "utf-8"
+                    );
+                }
+                console.log(chalk.cyan(`Generated the ${answers.name.split(" ").join("-")}.json file for ReactJS`))
+            });
+    } else {
+        const config = `{\n\t"compilerOptions": {\n\t\t"baseUrl": ".",\n\t\t"outDir": "build/dist",\n\t\t"module": "esnext",\n\t\t"target": "es5",\n\t\t"lib": ["es6", "dom", "esnext.asynciterable"],\n\t\t"sourceMap": true,\n\t\t"allowJs": true,\n\t\t"jsx": "react",\n\t\t"moduleResolution": "node",\n\t\t"rootDir": "src",\n\t\t"forceConsistentCasingInFileNames": true,\n\t\t"noImplicitReturns": true,\n\t\t"noImplicitThis": true,\n\t\t"noImplicitAny": true,\n\t\t"strictNullChecks": true,\n\t\t"suppressImplicitAnyIndexErrors": true,\n\t\t"noUnusedLocals": true,\n\t\t"skipLibCheck": true\n\t},\n\t"exclude": [\n\t\t"node_modules",\n\t\t"build",\n\t\t"scripts",\n\t\t"acceptance-tests",\n\t\t"webpack",\n\t\t"jest",\n\t\t"src/setupTests.ts"\n\t]\n}\n`;
+        fs.writeFileSync("tsconfig.json", config, "utf-8");
+        console.log(chalk.cyan(`Generated the tsconfig.json file for ReactJS`))
+    }
 };

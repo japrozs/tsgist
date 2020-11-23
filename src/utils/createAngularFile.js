@@ -4,27 +4,28 @@ const fs = require('fs');
 const chalk = require('chalk');
 
 const config = {
+    "compileOnSave": false,
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "jsx": "react-native",
-        "lib": ["es6", "esnext.asynciterable"],
-        "strict": true,
-        "esModuleInterop": true,
         "rootDir": "src",
-        "forceConsistentCasingInFileNames": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true,
-        "skipLibCheck": true,
-        "baseUrl": "."
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "strict": true,
+        "target": "es2015",
+        "module": "es2020",
+        "lib": [
+            "es2018",
+            "dom"
+        ]
     }
 }
 
-module.exports = function createNativeFile(custom) {
+module.exports = function createAngularFile(custom) {
         if (custom) {
             inquirer.prompt([{
                         type: "text",
@@ -32,15 +33,32 @@ module.exports = function createNativeFile(custom) {
                         name: "location",
                         default: path.basename(process.cwd()),
                     }, {
+                        type: 'confirm',
+                        message: "Compile on Save : ",
+                        name: 'compileOnSave',
+                        default: true
+                    }, {
                         type: 'text',
                         message: "Main directory : ",
                         name: "src",
                         default: "src"
                     },
                     {
+                        type: "text",
+                        message: "Output directory : ",
+                        name: "outDir",
+                        default: "build/dist",
+                    }, {
                         type: 'list',
                         message: "Target : ",
                         name: 'target',
+                        choices: [
+                            "ES3", "ES5", "ES6", "ES2015", "ES2016", "ES2017", "ES2018", "ES2019", "ES2020", "ESNext"
+                        ]
+                    }, {
+                        type: 'list',
+                        message: "Module : ",
+                        name: 'module',
                         choices: [
                             "ES3", "ES5", "ES6", "ES2015", "ES2016", "ES2017", "ES2018", "ES2019", "ES2020", "ESNext"
                         ]
@@ -87,21 +105,25 @@ module.exports = function createNativeFile(custom) {
                         default: true
                     }, {
                         type: 'confirm',
-                        message: "SkipLibCheck ?",
-                        name: 'libcheck',
+                        message: "sourceMap ?",
+                        name: 'sourceMap',
                         default: true
-                    }, {
-                        type: 'text',
-                        message: 'Name of the file',
-                        name: 'name',
-                        default: 'tsconfig.json'
-                    }
+                    },
+                    {
+                        type: "text",
+                        message: "What do you want to name the file?",
+                        name: "name",
+                        default: "tsconfig.json",
+                    },
                 ]).then((answers) => {
-                        config.compilerOptions.rootDir = answers.src;
+                        config.compileOnSave = answers.compileOnSave;
+                        config.compilerOptions.strict = answers.strict;
                         config.compilerOptions.lib = answers.lib;
                         config.compilerOptions.target = answers.target;
-                        config.compilerOptions.strict = answers.strict;
-                        config.compilerOptions.skipLibCheck = answers.libcheck;
+                        config.compilerOptions.sourceMap = answers.sourceMap;
+                        config.compilerOptions.module = answers.module;
+                        config.compilerOptions.rootDir = answers.src;
+                        config.compilerOptions.outDir = answers.outDir;
 
                         const hasJson = answers.name.includes('.json')
                         if (answers.location == path.basename(process.cwd())) {
@@ -109,11 +131,11 @@ module.exports = function createNativeFile(custom) {
             } else {
                 fs.writeFileSync(`/${path.join(process.cwd(),answers.location,hasJson? answers.name.split(" ").join("-"): `${answers.name.replace(" ", "-")}.json`)}`, JSON.stringify(config), "utf-8");
             }
-            console.log(chalk.cyan(`Generated the ${answers.name.split(" ").join("-")}.json file for React Native`))
+            console.log(chalk.cyan(`Generated the tsconfig.json file for AngularJS`))
         })
     } else {
-        const data = `{\n\t"compilerOptions": {\n\t\t"target": "es5",\n\t\t"module": "commonjs",\n\t\t"jsx": "react-native",\n\t\t"lib": ["es6", "esnext.asynciterable"],\n\t\t"strict": true,\n\t\t"esModuleInterop": true,\n\t\t"rootDir": "src",\n\t\t"forceConsistentCasingInFileNames": true,\n\t\t"noImplicitReturns": true,\n\t\t"noImplicitThis": true,\n\t\t"noImplicitAny": true,\n\t\t"strictNullChecks": true,\n\t\t"suppressImplicitAnyIndexErrors": true,\n\t\t"noUnusedLocals": true,\n\t\t"skipLibCheck": true,\n\t\t"baseUrl": "."\n}\n`
-        fs.writeFileSync("tsconfig.json", data, "utf-8");
-        console.log(chalk.cyan(`Generated the tsconfig.json file for React Native`))
+        const data = `{\n\t"compileOnSave": false,\n\t"compilerOptions": {\n\t\t"baseUrl": "./",\n\t\t"outDir": "./dist/out-tsc",\n\t\t"sourceMap": true,\n\t\t"declaration": false,\n\t\t"downlevelIteration": true,\n\t\t"experimentalDecorators": true,\n\t\t"moduleResolution": "node",\n\t\t"importHelpers": true,\n\t\t"strict": true,\n\t\t"target": "es2015",\n\t\t"module": "es2020",\n\t\t"lib": ["es2018","dom"]\n\t}\n}\n`
+        fs.writeFileSync('tsconfig.json', data, 'utf-8');
+        console.log(chalk.cyan(`Generated the tsconfig.json file for AngularJS`))
     }
 }

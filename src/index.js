@@ -8,6 +8,8 @@ const chalk = require("chalk");
 const createReactFile = require('./utils/createReactFile');
 const createNodeFile = require('./utils/createNodeFile');
 const createNativeFile = require('./utils/createNativeFile');
+const createVueFile = require('./utils/createVueFile');
+const createAngularFile = require('./utils/createAngularFile');
 
 // Process Variables
 const process = require("process");
@@ -15,7 +17,7 @@ const path = process.cwd();
 const fs = require("fs");
 
 program
-    .version("1.1.3")
+    .version("1.1.6")
     .description("A CLI to make customizable 'tsconfig.json' files easily");
 
 function main() {
@@ -24,7 +26,7 @@ function main() {
                 type: "list",
                 message: "Please select the framework that you are using:",
                 name: "framework",
-                choices: ["ReactJS", "React-Native", "NodeJS"],
+                choices: ["AngularJS", "ReactJS", "NodeJS", "VueJS", "React-Native", ],
             },
             {
                 type: "confirm",
@@ -44,6 +46,12 @@ function main() {
                     break;
                 case "NodeJS":
                     createNodeFile(answers.custom);
+                    break;
+                case "VueJS":
+                    createVueFile(answers.custom);
+                    break;
+                case "AngularJS":
+                    createAngularFile(answers.custom);
                     break;
             }
         });
