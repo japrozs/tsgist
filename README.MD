@@ -1,8 +1,8 @@
 # Tsgist
 
-Tsgist is a package to generate `tsconfig.json` is an easy and customizable manner.To get started install `tsgist` through `npm` with the following command:
+Tsgist is a package to generate `tsconfig.json` file is an easy and customizable manner.To get started install `tsgist` through `npm` with the following command:
 
-```bash
+```
 npm install -g tsgist
 ```
 
