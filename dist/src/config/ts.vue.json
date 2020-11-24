@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "outDir": "./built/",
+        "sourceMap": true,
+        "rootDir": "src",
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "module": "es2015",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "target": "ES5",
+        "lib": ["ES2015", "DOM"]
+    },
+    "include": [
+        "./client/**/*"
+    ]
+}

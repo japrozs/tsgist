@@ -29,6 +29,27 @@ Or for a quick start, please use the command below:
 npx tsgist init
 ```
 
+## Template
+
+You can use template `tsconfig.json` files for easy and custom config files.To get started, `tsgist` creates a folder called `tsgist` in the home directory of your computer.In that directory, create a `json` files with the name that you want the `alias` to be.For example, id your `json` file is called `config.json` then you can use the command:
+
+```bash
+tsgist temp config
+```
+
+where `config` is the name of the json file which you want to use.
+
+To find the home directory of your system, use the following command:
+
+```bash
+$ node
+Welcome to Node.js v12.18.2.
+Type ".help" for more information.
+> const os = require('os');
+> os.homedir()
+'/Users/Japroz'
+```
+
 ## FUNDING
 
 For funding, see the `FUNDING.YML` file in the `.github` folder or click the Sponsor button at the top of the page on [Github](https://github.com/Japroz-Saini/tsgist).
